@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form</title>
+    <link rel="stylesheet" href="fonts/montserrat.css">
+    <link rel="stylesheet" href="app.css">
+</head>
+<body>
+    <div class="block" id="app">
+        <form action=""  @submit.prevent="submitForm">
+            <h2>Регистрация</h2>
+            <div class="line"></div>
+            <h3>Заполните Ваши данные</h3>
+            <div class="grid-blocks">
+                <label class="input-item">
+                    <input v-model.trim="username" :class="{ 'alert': !username && errors.username }" type="text" placeholder=" "/>
+                    <span class="label">Имя</span>
+                    <span v-if="!username" class="error-text">{{ errors.username }}</span>
+                </label>
+                <label class="input-item">
+                    <input v-model.trim="email" :class="{ 'alert': !email && errors.email }" type="text" placeholder=" "/>
+                    <span class="label">Email</span>
+                    <span v-if="!checkEmail" class="error-text">{{ errors.email }}</span>
+                </label>
+                <label class="input-item full">
+                    <select v-model.trim="role" :class="{ 'alert': !role && errors.role }">
+                        <option value="0">Должность</option>
+                        <option v-for="element in roles" :value="element.value">{{ element.name }}</option>
+                    </select>
+                    <span v-if="!role" class="error-text">{{ errors.role }}</span>
+                </label>
+                <label class="input-item password">
+                    <input v-model.trim="password" :type="(password_fields.showPassword) ? 'text' : 'password'" :class="{ 'alert': !password && errors.password }" type="password" placeholder=" "/>
+                    <span class="label">Пароль</span>
+                    <span v-if="!password" class="error-text">{{ errors.password }}</span>
+                    <img :src="(password_fields.showPassword) ? 'img/showed.svg' : 'img/hided.svg'" @click="passwordVisible('showPassword')" alt=""/>
+                </label>
+                <label class="input-item password">
+                    <input v-model.trim="password_repeat" :type="(password_fields.showPasswordRepeat) ? 'text' : 'password'" :class="{ 'alert': !password_repeat && errors.password_repeat }" type="password" placeholder=" "/>
+                    <span class="label">Повторите пароль</span>
+                    <span v-if="!checkPassword" class="error-text">{{ errors.password_repeat }}</span>
+                    <img :src="(password_fields.showPasswordRepeat) ? 'img/showed.svg' : 'img/hided.svg'" @click="passwordVisible('showPasswordRepeat')" alt=""/>
+                </label>
+            </div>
+            <br/>
+            <div class="line"></div>
+            <div class="switch-block">
+                <label class="switch">
+                    <input type="checkbox" v-model.trim="public">
+                    <span class="slider round"></span>
+                </label>
+                <div class="right-block">
+                    <p>Хотите чтобы Ваш профиль видели другие участники платформы? </p>
+                    <p>Включает профиль для просмотра другими пользователями по ссылке</p>
+                </div>
+            </div>
+            <div class="switch-block confirm">
+                <div class="text">
+                    <div class="checkbox-wrapper-4">
+                        <input class="inp-cbx" id="morning" v-model.trim="agree" type="checkbox"/>
+                        <label class="cbx" for="morning"><span>
+                        <svg width="12px" height="10px">
+                            <use xlink:href="#check-4"></use>
+                        </svg></span></label>
+                        <svg class="inline-svg">
+                            <symbol id="check-4" viewbox="0 0 12 10">
+                            <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+                            </symbol>
+                        </svg>
+                    </div>
+                    <p>Регистрируясь, Вы соглашаетесь  с <span>политикой конфиденциальности</span> и обработкой <span>персональных данных</span></p>
+                </div>
+                <button type="submit">Зарегистрироваться</button>
+            </div>
+        </form>
+    </div>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
